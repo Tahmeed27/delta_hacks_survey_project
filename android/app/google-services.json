@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "797458683138",
+    "firebase_url": "https://delta-hacks-project.firebaseio.com",
+    "project_id": "delta-hacks-project",
+    "storage_bucket": "delta-hacks-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797458683138:android:a508001c30551491d51e1b",
+        "android_client_info": {
+          "package_name": "surveyproject.delta_hacks_survey_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "797458683138-l80oianr001utsnv6j2mpcb1c2ej6ojk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCsirUaORMNoe8x-gE34IUR8qs_EYDtE_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "797458683138-l80oianr001utsnv6j2mpcb1c2ej6ojk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
