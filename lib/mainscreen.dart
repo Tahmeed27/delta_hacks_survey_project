@@ -12,15 +12,27 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  Color filterColor = Colors.transparent;
-  Color bgColor = Colors.grey;
+  bool filterTap = false;
+
+  Color getColor(bool filterTap){
+    if (filterTap){
+      return Colors.grey;
+    }
+    return Colors.transparent;
+  }
+
+  Color getColor2(bool filterTap){
+    if (filterTap) {
+      return Colors.grey[900];
+    }
+    return Colors.grey;
+  }
 
   GestureDetector myTags(String tag) {
     return GestureDetector(
       onTap: (){
         setState(() {
-          bgColor = Colors.grey[900];
-          filterColor = Colors.grey;
+          filterTap = !filterTap;
         });
       },
 
@@ -31,12 +43,12 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            color: filterColor,
+            color: getColor(filterTap),
           ),
           child: Text(
             tag,
             style: TextStyle(
-              color: bgColor,
+              color: getColor2(filterTap),
               letterSpacing: 2.0,
             ),
           ),
@@ -56,7 +68,7 @@ class _HomeState extends State<Home> {
             Expanded(
               flex: 1,
               child: Text(
-                'Survey App',
+                'SurveyTree',
                 style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.w400,
