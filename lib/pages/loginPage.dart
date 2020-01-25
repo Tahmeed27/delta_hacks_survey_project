@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/socialSignInButton.dart';
 import 'package:flutter_app/widgets/emailCard.dart';
+import 'package:flutter_app/widgets/potAsset.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -8,33 +9,27 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('SURVEY TREE'),
-          elevation: 4.0,
+          centerTitle: true,
+          backgroundColor: Colors.green[700],
+          elevation: 10.0,
         ),
         body: _buildContent(),
-        backgroundColor: Colors.green[50]//Colors.grey[200],
+        backgroundColor: Colors.white//Colors.grey[200],
     );
   }
 
   Widget _buildContent() {
     return Padding(
-      padding: EdgeInsets.all(20.0),
+      padding: EdgeInsets.all(25.0),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            PotAsset(),
             SizedBox(height: 10.0,),
-            Text(
-              'Sign-In',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 50.0,
-                fontWeight: FontWeight.w700,
-              ),
-            ), //replace with image
-            SizedBox(height: 100.0,),
             EmailSignInForm(),
-            SizedBox(height: 20.0,),
+            SizedBox(height: 0.0,),
             Text(
               'OR',
               textAlign: TextAlign.center,
@@ -43,12 +38,12 @@ class SignInPage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            SizedBox(height: 10.0,),
+            SizedBox(height: 20.0,),
             SocialSignInButton(
               assetName: 'Images/google-logo.png',
               text: 'Sign in with Google',
               textColor: Colors.black,
-              color: Colors.white,
+              color: Colors.grey[100],
               onPressed: () {},
             ),
             SizedBox(height: 15.0,),

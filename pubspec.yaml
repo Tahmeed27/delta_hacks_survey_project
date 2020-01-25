@@ -47,6 +47,7 @@ flutter:
   assets:
     - Images/google-logo.png
     - Images/facebook-logo.png
+    - Images/pot.jpg
 
 
 
