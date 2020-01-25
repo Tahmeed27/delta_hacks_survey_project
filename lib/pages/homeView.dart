@@ -10,12 +10,11 @@ class Home extends StatefulWidget {
 }
 
 class StructFilter {
-  String tag;
+  final String tag;
   bool filterTap = false;
   StructFilter(this.tag);
-
-
 }
+
 StructFilter sports = StructFilter("Sports");
 StructFilter school = StructFilter("School");
 StructFilter food = StructFilter("Food");
@@ -24,10 +23,29 @@ StructFilter google = StructFilter("Google");
 
 List<StructFilter> filterList = [sports, school, food, facebook, google];
 
+class StructQuestion {
+  final String title;
+  final String choiceA;
+  final String choiceB;
+  final String choiceC;
+
+  StructQuestion(
+      this.title,
+      this.choiceA,
+      this.choiceB,
+      this.choiceC,
+      );
+}
+
+StructQuestion q1 = StructQuestion("How did you like the food at the cafeteria", "Very good", "Okay", "Very Bad");
+StructQuestion q2 = StructQuestion("How is this app?", "Amazing", "Nice", "Great");
+StructQuestion q3 = StructQuestion("What are you doing tonight?", "Coding", "Sleeping", "Partying");
+
+List<StructQuestion> qList = [q1, q2, q3];
+
+
 
 class _HomeState extends State<Home> {
-
-
   GestureDetector filterTemplate(StructFilter structFilter) {
     return GestureDetector(
       onTap: () {
@@ -55,6 +73,7 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,111 +118,20 @@ class _HomeState extends State<Home> {
             height: 50.0,
             child: ListView(
                 scrollDirection: Axis.horizontal,
-                children: filterList.map((item){
+                children: filterList.map((item) {
                   return filterTemplate(item);
-                }).toList()
-            ),
+                }).toList()),
           ),
           Divider(
             height: 15.0,
             color: Colors.grey,
           ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-            padding:
-            const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-            decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(7.0))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Text(
-                    'QUESTION',
-                    style: TextStyle(
-                      color: Colors.grey,
-                      letterSpacing: 2.0,
-                    ),
-                  ),
-                ),
-                Text(
-                  'How did you like the food at the cafeteria today?',
-                  style: TextStyle(
-                    color: Colors.grey,
-                    letterSpacing: 2.0,
-                  ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(
-                      width: 12.0,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 60.0, horizontal: 10.0),
-                      width: 100.0,
-                      height: 150.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Colors.redAccent,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Very Good',
-                          style: TextStyle(
-                            color: Colors.grey[200],
-                            letterSpacing: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 60.0, horizontal: 10.0),
-                      width: 100.0,
-                      height: 150.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Colors.amberAccent[700],
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Not Good or Bad',
-                          style: TextStyle(
-                            color: Colors.grey[200],
-                            letterSpacing: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 60.0, horizontal: 10.0),
-                      width: 100.0,
-                      height: 150.0,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Colors.blueAccent,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Very Bad',
-                          style: TextStyle(
-                            color: Colors.grey[200],
-                            letterSpacing: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+
+          Expanded(
+            child: ListView.builder(
+                itemCount: qList.length,
+                itemBuilder: (BuildContext context, int index) => buildCard(context, index)
+
             ),
           ),
         ],
@@ -212,6 +140,111 @@ class _HomeState extends State<Home> {
         onPressed: () {},
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[800],
+      ),
+    );
+  }
+
+  Widget buildCard(BuildContext context, int index){
+    final question = qList[index];
+    return Container(
+      margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 8.0),
+      padding: const EdgeInsets.symmetric(
+          vertical: 5.0, horizontal: 10.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.all(Radius.circular(7.0))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+              'QUESTION',
+              style: TextStyle(
+                color: Colors.grey,
+                letterSpacing: 2.0,
+              ),
+            ),
+          ),
+          Text(
+            question.title,
+            style: TextStyle(
+              color: Colors.grey,
+              letterSpacing: 2.0,
+            ),
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                width: 12.0,
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(
+                    8.0, 15.0, 3.0, 0.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 60.0, horizontal: 10.0),
+                width: 100.0,
+                height: 150.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.redAccent,
+                ),
+                child: Center(
+                  child: Text(
+                    question.choiceA,
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(
+                    8.0, 15.0, 3.0, 0.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 60.0, horizontal: 10.0),
+                width: 100.0,
+                height: 150.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.amberAccent[700],
+                ),
+                child: Center(
+                  child: Text(
+                    question.choiceB,
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(
+                    8.0, 15.0, 3.0, 0.0),
+                padding: const EdgeInsets.symmetric(
+                    vertical: 60.0, horizontal: 10.0),
+                width: 100.0,
+                height: 150.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.blueAccent,
+                ),
+                child: Center(
+                  child: Text(
+                    question.choiceC,
+                    style: TextStyle(
+                      color: Colors.white,
+                      letterSpacing: 1.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
