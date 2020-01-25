@@ -5,37 +5,36 @@ void main() => runApp(MaterialApp(
 ));
 
 class Home extends StatefulWidget {
-
   @override
   _HomeState createState() => _HomeState();
 }
 
+class StructFilter {
+  String tag;
+  bool filterTap = false;
+  StructFilter(this.tag);
+
+
+}
+StructFilter sports = StructFilter("Sports");
+StructFilter school = StructFilter("School");
+StructFilter food = StructFilter("Food");
+StructFilter facebook = StructFilter("Facebook");
+StructFilter google = StructFilter("Google");
+
+List<StructFilter> filterList = [sports, school, food, facebook, google];
+
+
 class _HomeState extends State<Home> {
 
-  bool filterTap = false;
 
-  Color getColor(bool filterTap){
-    if (filterTap){
-      return Colors.grey;
-    }
-    return Colors.transparent;
-  }
-
-  Color getColor2(bool filterTap){
-    if (filterTap) {
-      return Colors.grey[900];
-    }
-    return Colors.grey;
-  }
-
-  GestureDetector myTags(String tag) {
+  GestureDetector filterTemplate(StructFilter structFilter) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
-          filterTap = !filterTap;
+          structFilter.filterTap = !structFilter.filterTap;
         });
       },
-
       child: Center(
         child: Container(
           margin: const EdgeInsets.only(right: 20.0),
@@ -43,12 +42,12 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            color: getColor(filterTap),
+            color: structFilter.filterTap ? Colors.grey : Colors.transparent,
           ),
           child: Text(
-            tag,
+            structFilter.tag,
             style: TextStyle(
-              color: getColor2(filterTap),
+              color: structFilter.filterTap ? Colors.grey[900] : Colors.grey,
               letterSpacing: 2.0,
             ),
           ),
@@ -56,7 +55,6 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,16 +98,10 @@ class _HomeState extends State<Home> {
             margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
             height: 50.0,
             child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                myTags('Food'),
-                myTags('School'),
-                myTags('Sports'),
-                myTags('Facebook'),
-                myTags('Google'),
-                myTags('Netflix'),
-                myTags('Amazon'),
-              ],
+                scrollDirection: Axis.horizontal,
+                children: filterList.map((item){
+                  return filterTemplate(item);
+                }).toList()
             ),
           ),
           Divider(
