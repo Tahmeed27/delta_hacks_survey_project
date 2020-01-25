@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/RouteGenerator.dart';
 
 //Firestore Plugins
 import 'package:firebase_auth/firebase_auth.dart';
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+      //initialRoute: '/', //TODO: Use this for routing when ready
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
@@ -88,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
               return new Text('Loading...');
             default:
               return new Text(snapshot.data.documents.length.toString());
-
+            //TODO: Need to make a onPressed() function which will have a .pushNamed() for navigation
           /*return Text(
             snapshot.data.documents[0].toString(),
             textAlign: TextAlign.center,

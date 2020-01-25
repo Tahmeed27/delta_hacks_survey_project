@@ -89,8 +89,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 case ConnectionState.waiting:
                   return new Text('Loading...');
                 default:
-                  return new Text(snapshot.data.documents.length.toString());
-
+                  //return new Text(snapshot.data.documents.length.toString());
+                  return Column(
+                    children: <Widget>[
+                      Text(snapshot.data.documents[1]['name'])
+                    ],
+                  );
               /*return Text(
             snapshot.data.documents[0].toString(),
             textAlign: TextAlign.center,
