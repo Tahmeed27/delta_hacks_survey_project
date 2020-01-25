@@ -38,8 +38,11 @@ class StructQuestion {
       );
 }
 
-StructQuestion q1 = StructQuestion("How did you like the food at the cafeteria",
-    "Very good", "Okay", "Very Bad");
+StructQuestion q1 = StructQuestion(
+    "How did you like the food at the cafeteria?",
+    "Very good",
+    "Okay",
+    "Very Bad");
 StructQuestion q2 =
 StructQuestion("How is this app?", "Amazing", "Nice", "Great");
 StructQuestion q3 = StructQuestion(
@@ -153,23 +156,17 @@ class _HomeState extends State<Home> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.all(Radius.circular(7.0))),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 15.0),
             child: Text(
-              'QUESTION',
+              question.title,
               style: TextStyle(
+                fontSize: 17.0,
                 color: Colors.grey,
                 letterSpacing: 2.0,
               ),
-            ),
-          ),
-          Text(
-            question.title,
-            style: TextStyle(
-              color: Colors.grey,
-              letterSpacing: 2.0,
             ),
           ),
           Row(
