@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/gradientButton.dart';
 
-class EmailSignInForm extends StatelessWidget {
+class EmailRegsForm extends StatelessWidget {
   List<Widget> _buildChildren(){
     return [
       TextField(
@@ -12,24 +12,27 @@ class EmailSignInForm extends StatelessWidget {
       ),
       TextField(
         decoration: InputDecoration(
+          labelText: 'Username',
+          hintText: 'Enter desired Username',
+        ),
+      ),
+      TextField(
+        decoration: InputDecoration(
           labelText: 'Password',
-          hintText: 'Enter your Password',
+          hintText: 'Enter desired Password',
         ),
         obscureText: true,
       ),
+      SizedBox(height: 20.0,),
       RaisedGradientButton(
           child: Text(
-            'Sign In',
+            'Complete Registration',
             style: TextStyle(color: Colors.white),
           ),
           gradient: LinearGradient(
             colors: <Color>[Colors.green[800], Colors.green[400]],
           ),
           onPressed: (){}
-      ),
-      FlatButton(
-        child: Text('Need an account? Register'),
-        onPressed: () {},
       ),
     ];
   }
