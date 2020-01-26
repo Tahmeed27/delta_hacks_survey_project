@@ -21,6 +21,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
         .then((user) {
       //Navigator.of(context).pushReplacementNamed('/homePage');
+      // TODO: Add username and email to Users collection document
+
       print("User Logged in");
     }).catchError((e) {
       print(e);
