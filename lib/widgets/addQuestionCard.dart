@@ -10,7 +10,6 @@ class AddQuestionForm extends StatefulWidget {
 }
 
 class _EmailRegsFormState extends State<AddQuestionForm> {
-
   final TextEditingController _questionController = TextEditingController();
   final TextEditingController _choiceoneController = TextEditingController();
   final TextEditingController _choicetwoController = TextEditingController();
@@ -19,8 +18,9 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
 
   CrudMethods crudObj = new CrudMethods();
 
-  void _submit(){
-    print('Question: ${_questionController.text}\nChoice 1: ${_choiceoneController.text}\nChoice 2: ${_choicetwoController.text}\nChoice 3: ${_choicethreeController}' );
+  void _submit() {
+    print(
+        'Question: ${_questionController.text}\nChoice 1: ${_choiceoneController.text}\nChoice 2: ${_choicetwoController.text}\nChoice 3: ${_choicethreeController}');
     // accessing TextController using given format
     //enter firebase function here
     String questionTitle = _questionController.text;
@@ -42,7 +42,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
 
   }
 
-  List<Widget> _buildChildren(){
+  List<Widget> _buildChildren() {
     return [
       TextField(
         controller: _questionController,
@@ -62,6 +62,8 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
         hint: Text('Select appropriate tag for the Question'),
         onChanged: (_) {},
       ),
+      Dropdown(),
+      SizedBox(height: 30.0,),
       TextField(
         controller: _choiceoneController,
         decoration: InputDecoration(
@@ -75,7 +77,6 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
           labelText: 'Choice 2',
           hintText: 'Enter Option Two',
         ),
-        obscureText: true,
       ),
       TextField(
         controller: _choicethreeController,
@@ -83,9 +84,10 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
           labelText: 'Choice 3',
           hintText: 'Enter Option Three',
         ),
-        obscureText: true,
       ),
-      SizedBox(height: 100.0,),
+      SizedBox(
+        height: 100.0,
+      ),
       RaisedGradientButton(
         child: Text(
           'Submit Question',
@@ -98,6 +100,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
       ),
     ];
   }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -111,4 +114,39 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
   }
 }
 
+class Dropdown extends StatefulWidget {
+  Dropdown({Key key}) : super(key: key);
+  @override
+  _DropdownState createState() => _DropdownState();
+}
 
+class _DropdownState extends State<Dropdown> {
+  List<String> _filters = ["Sports", "Facebook", "Google", "Food", "Education"];
+  String dropdownValue;
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      hint: Text("Please choose category of the Question"),
+      value: dropdownValue,
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 24,
+      elevation: 16,
+      style: TextStyle(color: Colors.green[200]),
+      underline: Container(
+        height: 2,
+        color: Colors.green[400],
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: _filters.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
