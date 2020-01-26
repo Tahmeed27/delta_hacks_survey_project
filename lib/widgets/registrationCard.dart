@@ -4,6 +4,7 @@ import 'package:flutter_app/widgets/gradientButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/services/UserManagement.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_app/DataModel/User.dart';
 
 
 String userName;
@@ -41,6 +42,7 @@ class _EmailRegsFormState extends State<EmailRegsForm> {
       //TODO: TOAST data has been added
 
       Navigator.of(context).pushReplacementNamed('/homePage');
+      User.emailId  = email;
     }).catchError((e){
       //showDialog(context: context);
       //TODO: Make a pop up which tells the user what is wrong

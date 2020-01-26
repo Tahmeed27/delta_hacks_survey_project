@@ -20,7 +20,7 @@ getCustomAppBar(){
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
-          Text('SURVEY TREE', style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
+          Text('SURVEYTREE', style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
           IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
         ],),
     ),
