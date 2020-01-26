@@ -1,16 +1,28 @@
 class Question{
 
-  String _title;
-  String _userName;
-  List _option1 = new List(2);
-  List _option2 = new List(2);
-  List _option3 = new List(2);
+  String title;
+  String userName;
+  String option1Title;
+  String option2Title;
+  String option3Title;
+
+  int option1Counter;
+  int option2Counter;
+  int option3Counter;
 
   //A dynamic list that will contain all the relevant tags for the question
-  List _tags;
+  String tags;
+
+  bool choiceTap = false;
 
 
-  //TODO: Add constructor
+  Question(this.title, this.userName, this.option1Title, this.option1Counter,
+      this.option2Title, this.option2Counter, this.option3Title, this.option3Counter,
+      this.tags);
+
+ /* Question(this._title, this._userName, this._option1, this._option2,
+      this._option3, this._tags);
+
 
   String get userName => _userName;
 
@@ -46,7 +58,7 @@ class Question{
 
   set tags(List value) {
     _tags = value;
-  }
+  }*/
 
 
 }
