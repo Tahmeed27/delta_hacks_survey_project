@@ -29,18 +29,17 @@ class _EmailRegsFormState extends State<EmailRegsForm> {
     String email = _emailController.text;
     String userName = _usernameController.text;
     String password = _passwordController.text;
-
+    int questionsAnswered = 0;
     //String email = "hello@gmail.com";
     //String userName = "dhruvMittal";
     //String password = "123456779";
 
     FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)
         .then((signedInUser) {
-      UserManagement().storeNewUser(signedInUser.user, context, userName);
+      UserManagement().storeNewUser(signedInUser.user, context, userName, questionsAnswered);
 
       //TODO: TOAST data has been added
 
-      // TODO: Navigate to home page
       Navigator.of(context).pushReplacementNamed('/homePage');
     }).catchError((e){
       //showDialog(context: context);
