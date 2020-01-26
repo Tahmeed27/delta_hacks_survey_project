@@ -5,6 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_app/services/UserManagement.dart';
 //import 'package:fluttertoast/fluttertoast.dart';
 
+
+String userName;
+
 class EmailRegsForm extends StatefulWidget {
   @override
   _EmailRegsFormState createState() => _EmailRegsFormState();
@@ -38,6 +41,7 @@ class _EmailRegsFormState extends State<EmailRegsForm> {
       //TODO: TOAST data has been added
 
       // TODO: Navigate to home page
+      Navigator.of(context).pushReplacementNamed('/homePage');
     }).catchError((e){
       //showDialog(context: context);
       //TODO: Make a pop up which tells the user what is wrong
