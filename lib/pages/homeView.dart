@@ -86,7 +86,7 @@ class _HomeState extends State<Home> {
     }*/
 
     return Scaffold(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Color.fromRGBO(239, 234, 230, 1.0),
       appBar: AppBar(
         backgroundColor: Colors.grey[850],
         title: Row(
