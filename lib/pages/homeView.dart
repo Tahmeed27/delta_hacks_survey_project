@@ -16,6 +16,7 @@ Tag food = Tag("food");
 //Tag google = Tag("Google");
 
 List selectedTags = [sports, food];
+List<Question> qList = [];
 
 
 void main() => runApp(MaterialApp(
@@ -28,11 +29,11 @@ class Home extends StatefulWidget {
 }
 
 
-List<Question> qList = [];
+
+
+
 
 class _HomeState extends State<Home> {
-
-
   GestureDetector filterTemplate(Tag tag) {
 
     return GestureDetector(
@@ -64,6 +65,131 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  Widget buildCard(BuildContext context, int index) {
+    final question = qList[index];
+    return Container(
+      margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.brown),
+          borderRadius: BorderRadius.all(Radius.circular(7.0)),
+          color: Color.fromRGBO(234, 240, 230, 0.7)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 15.0),
+            child: Text(
+              question.title,
+              style: TextStyle(
+                fontSize: 17.0,
+                color: Colors.brown,
+                letterSpacing: 2.0,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 7.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                SizedBox(
+                  width: 12.0,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      question.choiceTap = true;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 400),
+                    margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 60.0, horizontal: 10.0),
+                    width: 100.0,
+                    height: question.choiceTap ? 100.0 : 150.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      shape: BoxShape.rectangle,
+                      color: Colors.redAccent,
+                    ),
+                    child: Center(
+                      child: Text(
+                        question.option1Title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      question.choiceTap = true;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 400),
+                    margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 60.0, horizontal: 10.0),
+                    width: 100.0,
+                    height: question.choiceTap ? 120.0 : 150.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      shape: BoxShape.rectangle,
+                      color: Colors.amberAccent[700],
+                    ),
+                    child: Center(
+                      child: Text(
+                        question.option2Title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      question.choiceTap = true;
+                    });
+                  },
+                  child: AnimatedContainer(
+                    duration: Duration(milliseconds: 400),
+                    margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 60.0, horizontal: 10.0),
+                    width: 100.0,
+                    height: question.choiceTap ? 30 : 150.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                      shape: BoxShape.rectangle,
+                      color: Colors.blueAccent,
+                    ),
+                    child: Center(
+                      child: Text(
+                        question.option3Title,
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +212,12 @@ class _HomeState extends State<Home> {
     }*/
 
     return Scaffold(
-      backgroundColor: Color.fromRGBO(239, 234, 230, 1.0),
+      backgroundColor: Color.fromRGBO(252, 224, 162, 1.0),
       appBar: AppBar(
         backgroundColor: Colors.grey[850],
         title: Row(
           children: <Widget>[
+            MyStreamWidget(),
             Expanded(
               flex: 1,
               child: Text(
@@ -124,7 +251,81 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: StreamBuilder<QuerySnapshot>(
+      body: Column(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+            height: 50.0,
+            child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: selectedTags.map((item) {
+                  return filterTemplate(item);
+                }).toList()),
+          ),
+          Divider(
+            height: 15.0,
+            color: Colors.brown,
+          ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: qList.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    buildCard(context, index)),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).pushNamed('/newQuestionPage');
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.grey[800],
+      ),
+    );
+  }
+
+  Future<List> getTaggedQuestions(List list_of_tags) async {
+
+    QuerySnapshot querySnapshot = await Firestore.instance.collection("questions").getDocuments();
+    List questions = querySnapshot.documents;
+
+    int len_question = questions.length;
+    int len_tag = list_of_tags.length;
+    List output;
+    for(int i = 0; i < len_question; i++){
+      List tagArray = questions[i]['tag'];
+      int len = tagArray.length;
+      bool intersect = false;
+      for(int j = 0; j < len; j++){
+        for(int k = 0; k < len_tag; k++){
+          if(questions[i]['tag'][j] == list_of_tags[k].tag){
+            intersect = true;
+            continue;
+          }
+        }
+        if(intersect == true){
+          continue;
+        }
+      }
+      if(intersect == true){
+        output.add(questions[i]);
+      }
+    }
+    return output;
+  }
+}
+
+class MyStreamWidget extends StatefulWidget {
+  @override
+  _MyStreamWidgetState createState() => _MyStreamWidgetState();
+}
+
+class _MyStreamWidgetState extends State<MyStreamWidget> {
+  StreamBuilder _widget;
+  @override
+  void initState() {
+    super.initState();
+    _widget = StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection("questions").snapshots(),
 
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -169,194 +370,14 @@ class _HomeState extends State<Home> {
                 */
 
               }
-              return Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                    height: 50.0,
-                    child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: selectedTags.map((item) {
-                          return filterTemplate(item);
-                        }).toList()),
-                  ),
-                  Divider(
-                    height: 15.0,
-                    color: Colors.grey,
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        itemCount: qList.length,
-                        itemBuilder: (BuildContext context, int index) =>
-                            buildCard(context, index)),
-                  ),
-                ],
-              );
+              return Text("");
           }
         }
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.of(context).pushNamed('/newQuestionPage');
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.grey[800],
-      ),
     );
   }
 
-  Widget buildCard(BuildContext context, int index) {
-    final question = qList[index];
-    return Container(
-      margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 8.0),
-      padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.all(Radius.circular(7.0))),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-              'QUESTION',
-              style: TextStyle(
-                color: Colors.grey,
-                letterSpacing: 2.0,
-              ),
-            ),
-          ),
-          Text(
-            question.title,
-            style: TextStyle(
-              color: Colors.grey,
-              letterSpacing: 2.0,
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              SizedBox(
-                width: 12.0,
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    question.choiceTap = !question.choiceTap;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 400),
-                  margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 60.0, horizontal: 10.0),
-                  width: 100.0,
-                  height: question.choiceTap ? 100.0 : 150.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.redAccent,
-                  ),
-                  child: Center(
-                    child: Text(
-                      question.option1Title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    question.choiceTap = !question.choiceTap;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 400),
-                  margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 60.0, horizontal: 10.0),
-                  width: 100.0,
-                  height: question.choiceTap ? 120.0 : 150.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.amberAccent[700],
-                  ),
-                  child: Center(
-                    child: Text(
-                      question.option2Title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    question.choiceTap = !question.choiceTap;
-                  });
-                },
-                child: AnimatedContainer(
-                  duration: Duration(milliseconds: 400),
-                  margin: const EdgeInsets.fromLTRB(8.0, 15.0, 3.0, 0.0),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 60.0, horizontal: 10.0),
-                  width: 100.0,
-                  height: question.choiceTap ? 30 : 150.0,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.blueAccent,
-                  ),
-                  child: Center(
-                    child: Text(
-                      question.option3Title,
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Future<List> getTaggedQuestions(List list_of_tags) async {
-
-    QuerySnapshot querySnapshot = await Firestore.instance.collection("questions").getDocuments();
-    List questions = querySnapshot.documents;
-
-    int len_question = questions.length;
-    int len_tag = list_of_tags.length;
-    List output;
-    for(int i = 0; i < len_question; i++){
-      List tagArray = questions[i]['tag'];
-      int len = tagArray.length;
-      bool intersect = false;
-      for(int j = 0; j < len; j++){
-        for(int k = 0; k < len_tag; k++){
-          if(questions[i]['tag'][j] == list_of_tags[k].tag){
-            intersect = true;
-            continue;
-          }
-        }
-        if(intersect == true){
-          continue;
-        }
-      }
-      if(intersect == true){
-        output.add(questions[i]);
-      }
-    }
-    return output;
+  @override
+  Widget build(BuildContext context) {
+    return _widget;
   }
 }
