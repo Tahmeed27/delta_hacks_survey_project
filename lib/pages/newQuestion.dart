@@ -22,7 +22,7 @@ class AddQuestion extends StatelessWidget {
 
   Widget _buildContent() {
     return Padding(
-      padding: EdgeInsets.all(25.0),
+      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 20.0),
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

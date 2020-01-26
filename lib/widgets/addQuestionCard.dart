@@ -131,33 +131,33 @@ class _DropdownState extends State<Dropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      hint: Padding(
-        padding: const EdgeInsets.fromLTRB(115.0, 0.0, 20.0, 0.0),
-        child: Text("Please choose category"),
-      ),
-      value: dropdownValue,
-      icon: Icon(Icons.arrow_drop_down),
-      iconSize: 24,
-      elevation: 16,
-      style: TextStyle(color: Colors.green[700]),
-      underline: Container(
-        height: 2,
-        color: Colors.green,
-      ),
+    return Container(
+      child: DropdownButton<String>(
+        hint: Text("Please choose category"),
+        value: dropdownValue,
+        icon: Icon(
+            Icons.arrow_drop_down,),
+        iconSize: 24,
+        elevation: 16,
+        style: TextStyle(color: Colors.green[700]),
+        underline: Container(
+          height: 2,
+          color: Colors.green,
+        ),
 
-      onChanged: (String newValue) {
-        setState(() {
-          dropdownValue = newValue;
-          getDropdown(newValue);
-        });
-      },
-      items: _filters.map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
+        onChanged: (String newValue) {
+          setState(() {
+            dropdownValue = newValue;
+            getDropdown(newValue);
+          });
+        },
+        items: _filters.map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
     );
   }
 }
