@@ -9,4 +9,15 @@ class CrudMethods{
     });
   }
 
+  getData() async{
+    return await Firestore.instance.collection('users').getDocuments();
+  }
+
+  updateQuestionsAnswered(selectedDocument, newValues){
+    Firestore.instance.collection('users').document(selectedDocument)
+        .updateData(newValues)
+        .catchError((e) {
+          print(e);
+    });
+  }
 }

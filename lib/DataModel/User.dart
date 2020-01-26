@@ -2,7 +2,7 @@
 class User{
   String _userName;
   String _password;
-  String _emailId;
+  static String emailId;
   int _treeProgress;
 
 
@@ -17,11 +17,6 @@ class User{
 
   String get password => _password;
 
-  String get emailId => _emailId;
-
-  set emailId(String value) {
-    _emailId = value;
-  }
 
   set password(String value) {
     _password = value;

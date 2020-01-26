@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/gradientButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/DataModel/User.dart';
 
 class EmailSignInForm extends StatefulWidget {
   @override
@@ -22,6 +23,8 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         .then((user) {
       Navigator.of(context).pushReplacementNamed('/homePage');
       print("User Logged in");
+      User.emailId = email;
+      print(User.emailId);
     }).catchError((e) {
       print(e);
     });

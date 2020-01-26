@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/DataModel/Question.dart';
 import 'package:flutter_app/DataModel/Tags.dart';
 import 'package:flutter_app/DataModel/User.dart';
+import 'package:flutter_app/services/CRUDMethods.dart';
 
 
 // Global Variables:
@@ -31,9 +32,14 @@ class Home extends StatefulWidget {
 
 
 
-
+QuerySnapshot doc;
 
 class _HomeState extends State<Home> {
+
+  //Class variables:
+  CrudMethods crudObj = new CrudMethods();
+  String docID;
+
   GestureDetector filterTemplate(Tag tag) {
 
     return GestureDetector(
@@ -41,7 +47,7 @@ class _HomeState extends State<Home> {
         setState(() {
           Tag myTag = new Tag(tag.tag);
           selectedTags.add(myTag);
-          taggedQuestions = getTaggedQuestions(selectedTags);
+          //taggedQuestions = getTaggedQuestions(selectedTags);
           tag.filterTap = !tag.filterTap;
         });
       },
@@ -100,7 +106,9 @@ class _HomeState extends State<Home> {
                   onTap: () {
                     setState(() {
                       question.choiceTap = true;
+
                     });
+                    incrementQuestionsAnswered();
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 400),
@@ -128,8 +136,11 @@ class _HomeState extends State<Home> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
+
                       question.choiceTap = true;
+
                     });
+                    incrementQuestionsAnswered();
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 400),
@@ -158,7 +169,9 @@ class _HomeState extends State<Home> {
                   onTap: () {
                     setState(() {
                       question.choiceTap = true;
+
                     });
+                    incrementQuestionsAnswered();
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 400),
@@ -193,23 +206,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-
-    //QuerySnapshot querySnapshot = Firestore.instance.collection("collection").getDocuments() as QuerySnapshot;
-
-    /*QuerySnapshot querySnapshot = StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection("questions").snapshots(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-
-        }
-    ) as QuerySnapshot;
-
-    var list = querySnapshot.documents;
-
-    for(int i = 0; i< list.length; i++){
-      Question newQuestion = new Question(list[i]['title'], list[i]['UserID'],
-          list[i]['option1'], list[i]['option2'], list[i]['option3'], list[i]['tag']);
-      qList.add(newQuestion);
-    }*/
 
     return Scaffold(
       backgroundColor: Color.fromRGBO(252, 224, 162, 1.0),
@@ -284,34 +280,35 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Future<List> getTaggedQuestions(List list_of_tags) async {
 
-    QuerySnapshot querySnapshot = await Firestore.instance.collection("questions").getDocuments();
-    List questions = querySnapshot.documents;
+  @override
+  void initState() {
+    crudObj.getData().then((results) {
+      setState(() {
+        doc = results;
+      });
+    });
+    super.initState();
+  }
 
-    int len_question = questions.length;
-    int len_tag = list_of_tags.length;
-    List output;
-    for(int i = 0; i < len_question; i++){
-      List tagArray = questions[i]['tag'];
-      int len = tagArray.length;
-      bool intersect = false;
-      for(int j = 0; j < len; j++){
-        for(int k = 0; k < len_tag; k++){
-          if(questions[i]['tag'][j] == list_of_tags[k].tag){
-            intersect = true;
-            continue;
-          }
-        }
-        if(intersect == true){
-          continue;
-        }
-      }
-      if(intersect == true){
-        output.add(questions[i]);
+  void incrementQuestionsAnswered() {
+
+    crudObj.getData().then((results) {
+      setState(() {
+        doc = results;
+      });
+    });
+
+    for(int i =0; i < doc.documents.length; i++){
+      if(doc.documents[i]['email'] == User.emailId){
+        print(doc.documents[i]['email']);
+        docID = doc.documents[i].documentID;
+        //print(docID);
+        //print(doc.documents[i]['questionsAnswered']+1);
+        crudObj.updateQuestionsAnswered(docID, {'questionsAnswered': doc.documents[i]['questionsAnswered']+1 });
+        break;
       }
     }
-    return output;
   }
 }
 
@@ -356,19 +353,6 @@ class _MyStreamWidgetState extends State<MyStreamWidget> {
                     option1Counter, option2Title, option2Counter, option3Title, option3Counter, tags);
 
                 qList.add(tempQuestion);
-
-                /*
-                print(title);
-                print(userName);
-                print(option1Title);
-                print(option1Counter);
-                print(option2Title);
-                print(option2Counter);
-                print(option3Title);
-                print(option3Counter);
-                print(tags);
-                */
-
               }
               return Text("");
           }
