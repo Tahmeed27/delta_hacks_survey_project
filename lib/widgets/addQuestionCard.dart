@@ -4,6 +4,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/services/CRUDMethods.dart';
 
+//Global Variables:
+String holder;
+
 class AddQuestionForm extends StatefulWidget {
   @override
   _EmailRegsFormState createState() => _EmailRegsFormState();
@@ -14,7 +17,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
   final TextEditingController _choiceoneController = TextEditingController();
   final TextEditingController _choicetwoController = TextEditingController();
   final TextEditingController _choicethreeController = TextEditingController();
-  final tag = "food"; //TODO: Change this from hardcoded to dynamic
+   //TODO: Change this from hardcoded to dynamic
 
   CrudMethods crudObj = new CrudMethods();
 
@@ -27,6 +30,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
     String choiceOne = _choiceoneController.text;
     String choiceTwo = _choicetwoController.text;
     String choiceThree = _choicethreeController.text;
+    String tag = holder;
 
     crudObj.addData({
       'title': questionTitle,
@@ -48,7 +52,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
         controller: _questionController,
         decoration: InputDecoration(
           labelText: 'QUESTION',
-          hintText: 'Enter QUESTION',
+          hintText: 'Enter Question',
         ),
       ),
       SizedBox(height: 20.0,),
@@ -123,6 +127,7 @@ class Dropdown extends StatefulWidget {
 class _DropdownState extends State<Dropdown> {
   List<String> _filters = ["Sports", "Facebook", "Google", "Food", "Education"];
   String dropdownValue;
+
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
@@ -136,9 +141,11 @@ class _DropdownState extends State<Dropdown> {
         height: 2,
         color: Colors.green[400],
       ),
+
       onChanged: (String newValue) {
         setState(() {
           dropdownValue = newValue;
+          getDropdown(newValue);
         });
       },
       items: _filters.map<DropdownMenuItem<String>>((String value) {
@@ -149,4 +156,8 @@ class _DropdownState extends State<Dropdown> {
       }).toList(),
     );
   }
+}
+
+void getDropdown(String newVal){
+  holder = newVal;
 }
