@@ -32,13 +32,15 @@ class Home extends StatefulWidget {
 
 
 
-QuerySnapshot doc;
+QuerySnapshot userDoc;
+QuerySnapshot questionDoc;
 
 class _HomeState extends State<Home> {
 
   //Class variables:
   CrudMethods crudObj = new CrudMethods();
-  String docID;
+  String userDocID;
+  String questionDocID;
 
   GestureDetector filterTemplate(Tag tag) {
 
@@ -109,6 +111,7 @@ class _HomeState extends State<Home> {
 
                     });
                     incrementQuestionsAnswered();
+                    incrementOption1Counter(question.title);
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 400),
@@ -141,6 +144,7 @@ class _HomeState extends State<Home> {
 
                     });
                     incrementQuestionsAnswered();
+                    incrementOption2Counter(question.title);
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 400),
@@ -172,6 +176,7 @@ class _HomeState extends State<Home> {
 
                     });
                     incrementQuestionsAnswered();
+                    incrementOption3Counter(question.title);
                   },
                   child: AnimatedContainer(
                     duration: Duration(milliseconds: 400),
@@ -285,7 +290,13 @@ class _HomeState extends State<Home> {
   void initState() {
     crudObj.getData().then((results) {
       setState(() {
-        doc = results;
+        userDoc = results;
+      });
+    });
+
+    crudObj.getQuestions().then((results) {
+      setState(() {
+        questionDoc = results;
       });
     });
     super.initState();
@@ -295,19 +306,74 @@ class _HomeState extends State<Home> {
 
     crudObj.getData().then((results) {
       setState(() {
-        doc = results;
+        userDoc = results;
       });
     });
 
-    for(int i =0; i < doc.documents.length; i++){
-      if(doc.documents[i]['email'] == User.emailId){
-        print(doc.documents[i]['email']);
-        docID = doc.documents[i].documentID;
+    for(int i =0; i < userDoc.documents.length; i++){
+      if(userDoc.documents[i]['email'] == User.emailId){
+        print(userDoc.documents[i]['email']);
+        userDocID = userDoc.documents[i].documentID;
         //print(docID);
         //print(doc.documents[i]['questionsAnswered']+1);
-        crudObj.updateQuestionsAnswered(docID, {'questionsAnswered': doc.documents[i]['questionsAnswered']+1 });
+        crudObj.updateQuestionsAnswered(userDocID, {'questionsAnswered': userDoc.documents[i]['questionsAnswered']+1 });
         break;
       }
+    }
+  }
+
+
+  void incrementOption1Counter(String questionTitle) {
+
+    crudObj.getQuestions().then((results) {
+      setState(() {
+        questionDoc = results;
+      });
+    });
+
+    for (DocumentSnapshot doc in questionDoc.documents) {
+      if(doc['title'] == questionTitle){
+        questionDocID = doc.documentID;
+        crudObj.updateOption3Counter(questionDocID, {'option1Counter': doc['option1Counter'] +1});
+        break;
+      }
+
+    }
+  }
+
+  void incrementOption2Counter(String questionTitle) {
+
+    crudObj.getQuestions().then((results) {
+      setState(() {
+        questionDoc = results;
+      });
+    });
+
+    for (DocumentSnapshot doc in questionDoc.documents) {
+      if(doc['title'] == questionTitle){
+        questionDocID = doc.documentID;
+        crudObj.updateOption3Counter(questionDocID, {'option2Counter': doc['option2Counter'] +1});
+        break;
+      }
+
+    }
+  }
+
+  void incrementOption3Counter(String questionTitle) {
+
+    crudObj.getQuestions().then((results) {
+      setState(() {
+        questionDoc = results;
+      });
+    });
+
+    for (DocumentSnapshot doc in questionDoc.documents) {
+      if(doc['title'] == questionTitle){
+        questionDocID = doc.documentID;
+        crudObj.updateOption3Counter(questionDocID, {'option3Counter': doc['option3Counter'] +1});
+        break;
+      }
+
     }
   }
 }

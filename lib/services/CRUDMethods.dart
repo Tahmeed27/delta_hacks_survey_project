@@ -13,11 +13,39 @@ class CrudMethods{
     return await Firestore.instance.collection('users').getDocuments();
   }
 
-  updateQuestionsAnswered(selectedDocument, newValues){
+  getQuestions() async{
+    return await Firestore.instance.collection('questions').getDocuments();
+  }
+
+  updateQuestionsAnswered(selectedDocument, newValues) {
     Firestore.instance.collection('users').document(selectedDocument)
         .updateData(newValues)
         .catchError((e) {
-          print(e);
+      print(e);
     });
+  }
+
+  updateOption1Counter(selectedDocument, newValues){
+    Firestore.instance.collection('questions').document(selectedDocument)
+        .updateData(newValues)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  updateOption2Counter(selectedDocument, newValues){
+    Firestore.instance.collection('questions').document(selectedDocument)
+        .updateData(newValues)
+        .catchError((e) {
+      print(e);
+    });
+  }
+
+  updateOption3Counter(selectedDocument, newValues){
+      Firestore.instance.collection('questions').document(selectedDocument)
+          .updateData(newValues)
+          .catchError((e) {
+        print(e);
+      });
   }
 }

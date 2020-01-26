@@ -96,13 +96,6 @@ class _MyHomePageState extends State<MyHomePage> {
               return new Text('Loading...');
             default:
               return new Text(snapshot.data.documents.length.toString());
-            //TODO: Need to make a onPressed() function which will have a .pushNamed() for navigation
-          /*return Text(
-            snapshot.data.documents[0].toString(),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          );*/
           }
         } // builder
 
