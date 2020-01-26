@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/registrationCard.dart';
 import 'package:flutter_app/widgets/potAsset.dart';
-
+import 'package:flutter_app/widgets/customAppBar.dart';
 
 class RegsPage extends StatelessWidget {
   @override

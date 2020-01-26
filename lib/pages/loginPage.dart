@@ -2,17 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/socialSignInButton.dart';
 import 'package:flutter_app/widgets/emailCard.dart';
 import 'package:flutter_app/widgets/potAsset.dart';
+import 'package:flutter_app/widgets/customAppBar.dart';
 
 class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('SURVEY TREE'),
-          centerTitle: true,
-          backgroundColor: Colors.green[700],
-          elevation: 10.0,
-        ),
+        appBar: getCustomAppBar(),
         body: _buildContent(),
         backgroundColor: Colors.white//Colors.grey[200],
     );
