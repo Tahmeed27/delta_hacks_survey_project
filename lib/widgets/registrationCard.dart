@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/widgets/gradientButton.dart';
+import 'package:flutter_app/widgets/formSubmit.dart';
 
-class EmailSignInForm extends StatefulWidget {
+class EmailRegsForm extends StatefulWidget {
   @override
-  _EmailSignInFormState createState() => _EmailSignInFormState();
+  _EmailRegsFormState createState() => _EmailRegsFormState();
 }
 
-class _EmailSignInFormState extends State<EmailSignInForm> {
-  
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+class _EmailRegsFormState extends State<EmailRegsForm> {
 
-  void _submit(){
-    print('email: ${ _emailController.text} password: ${_passwordController.text}'); //this gives entered values
-    // code your firebase funtion here
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  void _submit1(){
+    print('email: ${_emailController.text}\nusername: ${_usernameController.text}\npassword: ${_passwordController.text}');
+    // accessing TextController using given format
+    //enter firebase function here
   }
+
   List<Widget> _buildChildren(){
     return [
       TextField(
@@ -25,26 +27,24 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
         ),
       ),
       TextField(
+        controller: _usernameController,
+        decoration: InputDecoration(
+          labelText: 'Username',
+          hintText: 'Enter desired Username',
+        ),
+      ),
+      TextField(
         controller: _passwordController,
         decoration: InputDecoration(
           labelText: 'Password',
-          hintText: 'Enter your Password',
+          hintText: 'Enter desired Password',
         ),
         obscureText: true,
       ),
-      RaisedGradientButton(
-          child: Text(
-            'Sign In',
-            style: TextStyle(color: Colors.white),
-          ),
-          gradient: LinearGradient(
-            colors: <Color>[Colors.green[800], Colors.green[400]],
-          ),
-          onPressed: _submit,
-      ),
-      FlatButton(
-        child: Text('Need an account? Register'),
-        onPressed: () {},
+      SizedBox(height: 20.0,),
+      FormSubmitButton(
+        text: 'Complete Registration',
+        onPressed: _submit1,
       ),
     ];
   }

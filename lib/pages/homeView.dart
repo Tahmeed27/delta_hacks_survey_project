@@ -1,4 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_app/DataModel/Question.dart';
+import 'package:flutter_app/DataModel/Tags.dart';
+import 'package:flutter_app/DataModel/User.dart';
+
+
+// Global Variables:
+Future<List> taggedQuestions;
+
+Tag sports = Tag("sports");
+//Tag school = Tag("School");
+Tag food = Tag("food");
+//Tag facebook = Tag("Facebook");
+//Tag google = Tag("Google");
+
+List selectedTags = [sports, food];
+
 
 void main() => runApp(MaterialApp(
   home: Home(),
@@ -9,53 +26,21 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class StructFilter {
-  final String tag;
-  bool filterTap = false;
-  StructFilter(this.tag);
-}
 
-StructFilter sports = StructFilter("Sports");
-StructFilter school = StructFilter("School");
-StructFilter food = StructFilter("Food");
-StructFilter facebook = StructFilter("Facebook");
-StructFilter google = StructFilter("Google");
-
-List<StructFilter> filterList = [sports, school, food, facebook, google];
-
-class StructQuestion {
-  final String title;
-  final String choiceA;
-  final String choiceB;
-  final String choiceC;
-  bool choiceTap = false;
-
-  StructQuestion(
-      this.title,
-      this.choiceA,
-      this.choiceB,
-      this.choiceC,
-      );
-}
-
-StructQuestion q1 = StructQuestion(
-    "How did you like the food at the cafeteria?",
-    "Very good",
-    "Okay",
-    "Very Bad");
-StructQuestion q2 =
-StructQuestion("How is this app?", "Amazing", "Nice", "Great");
-StructQuestion q3 = StructQuestion(
-    "What are you doing tonight?", "Coding", "Sleeping", "Partying");
-
-List<StructQuestion> qList = [q1, q2, q3];
+List<Question> qList = [];
 
 class _HomeState extends State<Home> {
-  GestureDetector filterTemplate(StructFilter structFilter) {
+
+
+  GestureDetector filterTemplate(Tag tag) {
+
     return GestureDetector(
       onTap: () {
         setState(() {
-          structFilter.filterTap = !structFilter.filterTap;
+          Tag myTag = new Tag(tag.tag);
+          selectedTags.add(myTag);
+          taggedQuestions = getTaggedQuestions(selectedTags);
+          tag.filterTap = !tag.filterTap;
         });
       },
       child: Center(
@@ -65,12 +50,12 @@ class _HomeState extends State<Home> {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(4.0)),
-            color: structFilter.filterTap ? Colors.grey : Colors.transparent,
+            color: tag.filterTap ? Colors.grey : Colors.transparent,
           ),
           child: Text(
-            structFilter.tag,
+            tag.tag,
             style: TextStyle(
-              color: structFilter.filterTap ? Colors.grey[900] : Colors.grey,
+              color: tag.filterTap ? Colors.grey[900] : Colors.grey,
               letterSpacing: 2.0,
             ),
           ),
@@ -81,6 +66,24 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+
+    //QuerySnapshot querySnapshot = Firestore.instance.collection("collection").getDocuments() as QuerySnapshot;
+
+    /*QuerySnapshot querySnapshot = StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection("questions").snapshots(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+
+        }
+    ) as QuerySnapshot;
+
+    var list = querySnapshot.documents;
+
+    for(int i = 0; i< list.length; i++){
+      Question newQuestion = new Question(list[i]['title'], list[i]['UserID'],
+          list[i]['option1'], list[i]['option2'], list[i]['option3'], list[i]['tag']);
+      qList.add(newQuestion);
+    }*/
+
     return Scaffold(
       backgroundColor: Colors.grey[900],
       appBar: AppBar(
@@ -116,28 +119,76 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-            height: 50.0,
-            child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: filterList.map((item) {
-                  return filterTemplate(item);
-                }).toList()),
-          ),
-          Divider(
-            height: 15.0,
-            color: Colors.grey,
-          ),
-          Expanded(
-            child: ListView.builder(
-                itemCount: qList.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    buildCard(context, index)),
-          ),
-        ],
+      body: StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection("questions").snapshots(),
+
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) return const Text("Loading...");
+
+          if (snapshot.hasError)
+            return new Text('Error: ${snapshot.error}');
+
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return new Text('Loading...');
+            default:
+            //return new Text(snapshot.data.documents.length.toString());
+
+              int numberOfDocuments = snapshot.data.documents.length;
+              for(int i = 0; i < numberOfDocuments; i++){
+                String userName = snapshot.data.documents[i]['userName'];
+                String option1Title = snapshot.data.documents[i]['option1Title'];
+                int option1Counter = snapshot.data.documents[i]['option1Counter'];
+                String option2Title = snapshot.data.documents[i]['option2Title'];
+                int option2Counter = snapshot.data.documents[i]['option2Counter'];
+                String option3Title = snapshot.data.documents[i]['option3Title'];
+                int option3Counter = snapshot.data.documents[i]['option3Counter'];
+                String tags = snapshot.data.documents[i]['tags'];
+                String title = snapshot.data.documents[i]['title'];
+
+                Question tempQuestion = new Question(title, userName, option1Title,
+                    option1Counter, option2Title, option2Counter, option3Title, option3Counter, tags);
+
+                qList.add(tempQuestion);
+
+                /*
+                print(title);
+                print(userName);
+                print(option1Title);
+                print(option1Counter);
+                print(option2Title);
+                print(option2Counter);
+                print(option3Title);
+                print(option3Counter);
+                print(tags);
+                */
+
+              }
+              return Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    height: 50.0,
+                    child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: selectedTags.map((item) {
+                          return filterTemplate(item);
+                        }).toList()),
+                  ),
+                  Divider(
+                    height: 15.0,
+                    color: Colors.grey,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: qList.length,
+                        itemBuilder: (BuildContext context, int index) =>
+                            buildCard(context, index)),
+                  ),
+                ],
+              );
+          }
+        }
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
@@ -156,17 +207,23 @@ class _HomeState extends State<Home> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.all(Radius.circular(7.0))),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 15.0),
+            padding: const EdgeInsets.all(20.0),
             child: Text(
-              question.title,
+              'QUESTION',
               style: TextStyle(
-                fontSize: 17.0,
                 color: Colors.grey,
                 letterSpacing: 2.0,
               ),
+            ),
+          ),
+          Text(
+            question.title,
+            style: TextStyle(
+              color: Colors.grey,
+              letterSpacing: 2.0,
             ),
           ),
           Row(
@@ -194,7 +251,7 @@ class _HomeState extends State<Home> {
                   ),
                   child: Center(
                     child: Text(
-                      question.choiceA,
+                      question.option1Title,
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.0,
@@ -222,7 +279,7 @@ class _HomeState extends State<Home> {
                   ),
                   child: Center(
                     child: Text(
-                      question.choiceB,
+                      question.option2Title,
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.0,
@@ -250,7 +307,7 @@ class _HomeState extends State<Home> {
                   ),
                   child: Center(
                     child: Text(
-                      question.choiceC,
+                      question.option3Title,
                       style: TextStyle(
                         color: Colors.white,
                         letterSpacing: 1.0,
@@ -264,5 +321,35 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+
+  Future<List> getTaggedQuestions(List list_of_tags) async {
+
+    QuerySnapshot querySnapshot = await Firestore.instance.collection("questions").getDocuments();
+    List questions = querySnapshot.documents;
+
+    int len_question = questions.length;
+    int len_tag = list_of_tags.length;
+    List output;
+    for(int i = 0; i < len_question; i++){
+      List tagArray = questions[i]['tag'];
+      int len = tagArray.length;
+      bool intersect = false;
+      for(int j = 0; j < len; j++){
+        for(int k = 0; k < len_tag; k++){
+          if(questions[i]['tag'][j] == list_of_tags[k].tag){
+            intersect = true;
+            continue;
+          }
+        }
+        if(intersect == true){
+          continue;
+        }
+      }
+      if(intersect == true){
+        output.add(questions[i]);
+      }
+    }
+    return output;
   }
 }
