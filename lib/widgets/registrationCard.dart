@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/widgets/gradientButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_app/services/UserManagement.dart';
+//import 'package:fluttertoast/fluttertoast.dart';
 
 class EmailRegsForm extends StatefulWidget {
   @override
@@ -15,6 +19,35 @@ class _EmailRegsFormState extends State<EmailRegsForm> {
     print('email: ${_emailController.text}\nusername: ${_usernameController.text}\npassword: ${_passwordController.text}');
     // accessing TextController using given format
     //enter firebase function here
+    print('email: ${_emailController.text}\nusername: ${_usernameController.text}\npassword: ${_passwordController.text}');
+    // accessing TextController using given format
+    //enter firebase function here
+
+    String email = _emailController.text;
+    String userName = _usernameController.text;
+    String password = _passwordController.text;
+
+    //String email = "hello@gmail.com";
+    //String userName = "dhruvMittal";
+    //String password = "123456779";
+
+    FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)
+        .then((signedInUser) {
+      UserManagement().storeNewUser(signedInUser.user, context);
+    }).catchError((e){
+      //showDialog(context: context);
+      //TODO: Make a pop up which tells the user what is wrong
+     /* Fluttertoast.showToast(
+          msg: e.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIos: 1,
+          backgroundColor: Colors.black45,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );*/
+      print(e);
+    });
   }
 
   List<Widget> _buildChildren(){

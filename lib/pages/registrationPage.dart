@@ -3,6 +3,10 @@ import 'package:flutter_app/widgets/registrationCard.dart';
 import 'package:flutter_app/widgets/potAsset.dart';
 import 'package:flutter_app/widgets/customAppBar.dart';
 
+void main() => runApp(MaterialApp(
+  home: RegsPage(),
+));
+
 class RegsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

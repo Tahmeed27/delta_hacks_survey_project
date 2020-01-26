@@ -7,8 +7,9 @@ class UserManagement {
       'email': user.email,
       'uid': user.uid
     }).then((value) {
-      Navigator.of(context).pop();
-      Navigator.of(context).pushReplacementNamed('/homepage');
+      //Navigator.of(context).pop();
+      //Navigator.of(context).pushReplacementNamed('/homepage');
+      print("Data Added");
     }).catchError((e) {
       print(e);
     });
