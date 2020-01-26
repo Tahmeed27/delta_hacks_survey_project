@@ -38,7 +38,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
             style: TextStyle(color: Colors.white),
           ),
           gradient: LinearGradient(
-            colors: <Color>[Colors.green[800], Colors.green[400]],
+            colors: <Color>[Colors.green[800], Colors.blue[400]],
           ),
           onPressed: _submit,
       ),
