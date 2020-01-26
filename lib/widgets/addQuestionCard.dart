@@ -55,10 +55,19 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
           hintText: 'Enter Question',
         ),
       ),
-      SizedBox(
-        height: 20.0,
+      SizedBox(height: 20.0,),
+      new DropdownButton<String>(
+        items: <String>['Facebook', 'Google', 'Food', 'Education', 'Sports', 'Politics'].map((String value) {
+          return new DropdownMenuItem<String>(
+            value: value,
+            child: new Text(value),
+          );
+        }).toList(),
+        hint: Text('Select appropriate tag for the Question'),
+        onChanged: (_) {},
       ),
       Dropdown(),
+      SizedBox(height: 30.0,),
       TextField(
         controller: _choiceoneController,
         decoration: InputDecoration(
@@ -122,15 +131,15 @@ class _DropdownState extends State<Dropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      hint: Text("Please choose category"),
+      hint: Text("Please choose category of the Question"),
       value: dropdownValue,
       icon: Icon(Icons.arrow_drop_down),
       iconSize: 24,
       elevation: 16,
-      style: TextStyle(color: Colors.green),
+      style: TextStyle(color: Colors.green[200]),
       underline: Container(
         height: 2,
-        color: Colors.greenAccent,
+        color: Colors.green[400],
       ),
 
       onChanged: (String newValue) {

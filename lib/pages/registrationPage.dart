@@ -11,12 +11,7 @@ class RegsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('SURVEY TREE'),
-          centerTitle: true,
-          backgroundColor: Colors.green[700],
-          elevation: 10.0,
-        ),
+        appBar: getCustomAppBarOther(),
         body: _buildContent(),
         backgroundColor: Colors.white//Colors.grey[200],
     );
@@ -39,4 +34,31 @@ class RegsPage extends StatelessWidget {
       ),
     );
   }
+}
+
+getCustomAppBarOther(){
+  return PreferredSize(
+    preferredSize: Size.fromHeight(50),
+    child: Container(
+      alignment: Alignment.bottomCenter,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Colors.blue[700],
+            Colors.green[600],
+            Colors.green[700],
+          ],
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
+          Text('REGISTRATION', style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
+          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
+        ],),
+    ),
+  );
 }

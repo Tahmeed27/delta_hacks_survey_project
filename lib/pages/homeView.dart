@@ -106,7 +106,9 @@ class _HomeState extends State<Home> {
               child: IconButton(
                 icon: Icon(Icons.account_circle),
                 color: Colors.grey[400],
-                onPressed: () {},
+                onPressed: () {
+
+                },
               ),
             ),
             Expanded(
@@ -114,7 +116,9 @@ class _HomeState extends State<Home> {
               child: IconButton(
                 icon: Icon(Icons.assessment),
                 color: Colors.grey[400],
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/awardsViewPage');
+                },
               ),
             )
           ],
@@ -192,7 +196,9 @@ class _HomeState extends State<Home> {
         }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushNamed('/newQuestionPage');
+        },
         child: Icon(Icons.add),
         backgroundColor: Colors.grey[800],
       ),
