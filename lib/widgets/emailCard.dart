@@ -20,9 +20,7 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
     String password = _passwordController.text;
     FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
         .then((user) {
-      //Navigator.of(context).pushReplacementNamed('/homePage');
-      // TODO: Add username and email to Users collection document
-
+      Navigator.of(context).pushReplacementNamed('/homePage');
       print("User Logged in");
     }).catchError((e) {
       print(e);
@@ -59,7 +57,9 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
       ),
       FlatButton(
         child: Text('Need an account? Register'),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.of(context).pushReplacementNamed('/registrationPage');
+        },
       ),
     ];
   }
