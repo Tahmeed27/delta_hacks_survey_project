@@ -13,6 +13,7 @@ class AddQuestionForm extends StatefulWidget {
 }
 
 class _EmailRegsFormState extends State<AddQuestionForm> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _questionController = TextEditingController();
   final TextEditingController _choiceoneController = TextEditingController();
   final TextEditingController _choicetwoController = TextEditingController();
@@ -49,23 +50,21 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
   List<Widget> _buildChildren() {
     return [
       TextField(
+        controller: _usernameController,
+        decoration: InputDecoration(
+          labelText: 'USERNAME',
+          hintText: 'Enter Your Username',
+        ),
+      ),
+      SizedBox(height: 20.0,),
+      TextField(
         controller: _questionController,
         decoration: InputDecoration(
           labelText: 'QUESTION',
           hintText: 'Enter Question',
         ),
       ),
-      SizedBox(height: 20.0,),
-      new DropdownButton<String>(
-        items: <String>['Facebook', 'Google', 'Food', 'Education', 'Sports', 'Politics'].map((String value) {
-          return new DropdownMenuItem<String>(
-            value: value,
-            child: new Text(value),
-          );
-        }).toList(),
-        hint: Text('Select appropriate tag for the Question'),
-        onChanged: (_) {},
-      ),
+      SizedBox(height: 50.0,),
       Dropdown(),
       SizedBox(height: 30.0,),
       TextField(
@@ -108,7 +107,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(5.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -131,15 +130,18 @@ class _DropdownState extends State<Dropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButton<String>(
-      hint: Text("Please choose category of the Question"),
+      hint: Padding(
+        padding: const EdgeInsets.fromLTRB(115.0, 0.0, 20.0, 0.0),
+        child: Text("Please choose category"),
+      ),
       value: dropdownValue,
       icon: Icon(Icons.arrow_drop_down),
       iconSize: 24,
       elevation: 16,
-      style: TextStyle(color: Colors.green[200]),
+      style: TextStyle(color: Colors.green[700]),
       underline: Container(
         height: 2,
-        color: Colors.green[400],
+        color: Colors.green,
       ),
 
       onChanged: (String newValue) {

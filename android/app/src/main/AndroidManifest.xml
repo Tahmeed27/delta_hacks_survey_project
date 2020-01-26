@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="delta_hacks_survey_project"
+        android:label="survey_tree"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
