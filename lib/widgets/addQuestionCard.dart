@@ -18,6 +18,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
   final TextEditingController _choiceoneController = TextEditingController();
   final TextEditingController _choicetwoController = TextEditingController();
   final TextEditingController _choicethreeController = TextEditingController();
+
    //TODO: Change this from hardcoded to dynamic
 
   CrudMethods crudObj = new CrudMethods();
@@ -27,6 +28,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
         'Question: ${_questionController.text}\nChoice 1: ${_choiceoneController.text}\nChoice 2: ${_choicetwoController.text}\nChoice 3: ${_choicethreeController}');
     // accessing TextController using given format
     //enter firebase function here
+    String userName = _usernameController.text;
     String questionTitle = _questionController.text;
     String choiceOne = _choiceoneController.text;
     String choiceTwo = _choicetwoController.text;
@@ -42,7 +44,7 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
       'option2Counter': 0,
       'option3Counter': 0,
       'tags': tag,
-      'userName': "Dhruv Mittal" //TODO: Change this to match userName
+      'userName': userName //TODO: Change this to match userName
     });
 
   }
