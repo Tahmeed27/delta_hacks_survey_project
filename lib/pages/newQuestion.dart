@@ -6,6 +6,10 @@ import 'package:flutter_app/widgets/emailCard.dart';
 import 'package:flutter_app/widgets/potAsset.dart';
 import 'package:flutter_app/widgets/customAppBar.dart';
 
+void main() => runApp(MaterialApp(
+  home: AddQuestion(),
+));
+
 class AddQuestion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

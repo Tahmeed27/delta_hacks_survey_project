@@ -33,7 +33,7 @@ class _EmailRegsFormState extends State<EmailRegsForm> {
 
     FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)
         .then((signedInUser) {
-      UserManagement().storeNewUser(signedInUser.user, context);
+      UserManagement().storeNewUser(signedInUser.user, context, userName);
 
       //TODO: TOAST data has been added
 

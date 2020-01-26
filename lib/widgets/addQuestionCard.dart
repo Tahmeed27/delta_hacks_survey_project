@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/gradientButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_app/services/CRUDMethods.dart';
 
 class AddQuestionForm extends StatefulWidget {
   @override
@@ -12,11 +15,31 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
   final TextEditingController _choiceoneController = TextEditingController();
   final TextEditingController _choicetwoController = TextEditingController();
   final TextEditingController _choicethreeController = TextEditingController();
+  final tag = "food"; //TODO: Change this from hardcoded to dynamic
+
+  CrudMethods crudObj = new CrudMethods();
 
   void _submit(){
     print('Question: ${_questionController.text}\nChoice 1: ${_choiceoneController.text}\nChoice 2: ${_choicetwoController.text}\nChoice 3: ${_choicethreeController}' );
     // accessing TextController using given format
     //enter firebase function here
+    String questionTitle = _questionController.text;
+    String choiceOne = _choiceoneController.text;
+    String choiceTwo = _choicetwoController.text;
+    String choiceThree = _choicethreeController.text;
+
+    crudObj.addData({
+      'title': questionTitle,
+      'option1Title': choiceOne,
+      'option2Title': choiceTwo,
+      'option3Title': choiceThree,
+      'option1Counter': 0,
+      'option2Counter': 0,
+      'option3Counter': 0,
+      'tags': tag,
+      'userName': "Dhruv Mittal" //TODO: Change this to match userName
+    });
+
   }
 
   List<Widget> _buildChildren(){
