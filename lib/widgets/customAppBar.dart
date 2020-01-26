@@ -10,7 +10,7 @@ getCustomAppBar(){
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-            Colors.green[700],
+            Colors.blue[700],
             Colors.green[600],
             Colors.green[700],
           ],
@@ -19,7 +19,7 @@ getCustomAppBar(){
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          IconButton(icon: Icon(Icons.menu), onPressed: (){}),
+          IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
           Text('SURVEY TREE', style: TextStyle(color: Colors.white,fontSize: 22, fontWeight: FontWeight.w600),),
           IconButton(icon: Icon(Icons.favorite), onPressed: (){}),
         ],),

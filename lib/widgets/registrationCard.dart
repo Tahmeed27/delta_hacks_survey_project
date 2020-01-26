@@ -34,6 +34,10 @@ class _EmailRegsFormState extends State<EmailRegsForm> {
     FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password)
         .then((signedInUser) {
       UserManagement().storeNewUser(signedInUser.user, context);
+
+      //TODO: TOAST data has been added
+
+      // TODO: Navigate to home page
     }).catchError((e){
       //showDialog(context: context);
       //TODO: Make a pop up which tells the user what is wrong

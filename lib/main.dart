@@ -5,6 +5,7 @@ import 'package:flutter_app/RouteGenerator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/pages/loginPage.dart';
+import 'package:flutter_app/pages/newQuestion.dart';
 import 'package:flutter_app/pages/registrationPage.dart';
 
 void main() => runApp(MyApp());
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.green,
       ),
-      home: SignInPage(),
+      home: AddQuestion(),
     );
   }
 }
