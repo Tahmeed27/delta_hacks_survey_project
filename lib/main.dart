@@ -7,6 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_app/pages/loginPage.dart';
 import 'package:flutter_app/pages/newQuestion.dart';
 import 'package:flutter_app/pages/registrationPage.dart';
+import 'package:flutter_app/pages/homeView.dart';
+
 
 void main() => runApp(MyApp());
 

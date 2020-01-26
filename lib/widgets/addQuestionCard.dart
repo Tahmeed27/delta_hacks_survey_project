@@ -75,7 +75,6 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
           labelText: 'Choice 2',
           hintText: 'Enter Option Two',
         ),
-        obscureText: true,
       ),
       TextField(
         controller: _choicethreeController,
@@ -83,7 +82,6 @@ class _EmailRegsFormState extends State<AddQuestionForm> {
           labelText: 'Choice 3',
           hintText: 'Enter Option Three',
         ),
-        obscureText: true,
       ),
       SizedBox(height: 100.0,),
       RaisedGradientButton(
