@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/gradientButton.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class EmailSignInForm extends StatefulWidget {
   @override
@@ -14,6 +15,18 @@ class _EmailSignInFormState extends State<EmailSignInForm> {
   void _submit(){
     print('email: ${ _emailController.text} password: ${_passwordController.text}'); //this gives entered values
     // code your firebase funtion here
+
+    String email = _emailController.text;
+    String password = _passwordController.text;
+    FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password)
+        .then((user) {
+      //Navigator.of(context).pushReplacementNamed('/homePage');
+      print("User Logged in");
+    }).catchError((e) {
+      print(e);
+    });
+
+
   }
   List<Widget> _buildChildren(){
     return [
